@@ -1,5 +1,5 @@
 import React,{useState, useRef, useEffect} from 'react'
-import './styles.css'
+import '../../global/global.css'
 import { Navbar } from '../../components/navbar'
 import { ChromePicker } from 'react-color';
 
@@ -13,14 +13,14 @@ export const LinearGradient = () => {
     const textAreaRef = useRef(null);
     const [primeiraCor, setPrimeiraCor] = useState("#ffd100");
     const [segundaCor, setSegundaCor] = useState("#fe5d9f");
-
-  
+    const [aniScaleUp, setAniScaleUp] = useState();
 
     function copyToClipboard(e) {
         textAreaRef.current.select();
         document.execCommand('copy');
         e.target.focus();
         setCopySuccess('Copiado!');
+        setTimeout(() => setCopySuccess(""), 2500)
       };
 
     function inverterLados(){
@@ -52,27 +52,24 @@ export const LinearGradient = () => {
       }
     };
 
-    const handleClose = () => {
-      setDisplayColorPicker(false);
-    };
-      const handleClose2 = () => {
-      setDisplayColorPicker(false);
-    };
+    useEffect(() => {
+      setAniScaleUp("scale-up-center");
+    }, [])
 
     return (
         <>
-        <Navbar></Navbar>
+        <Navbar/>
         <div className="container"> 
         <div>
         <button onClick={ handleClick }>Cor 1</button>
+        { displayColorPicker ? <div style={{position: "absolute"}}>
+      <ChromePicker color={primeiraCor} onChange={handleChangeComplete} /> </div> : null }
         <button onClick={ handleClick2 }>Cor 2</button>
+        { displayColorPicker2 ? <div style={{position: "absolute"}} >
+      <ChromePicker color={segundaCor} onChange={handleChangeComplete2} /> </div> : null }
       </div>
         <div>
-           { displayColorPicker ? <div style={{position: "absolute"}}>
-      <ChromePicker color={primeiraCor} onChange={handleChangeComplete} /> </div> : null }
-            <div className="box1" style={{backgroundImage: `linear-gradient(${angulo}deg, ${primeiraCor}, ${segundaCor})` }}/>
-            { displayColorPicker2 ? <div style={{position: "absolute"}} >
-      <ChromePicker color={segundaCor} onChange={handleChangeComplete2} /> </div> : null }
+            <div id="box1" className={aniScaleUp} style={{backgroundImage: `linear-gradient(${angulo}deg, ${primeiraCor}, ${segundaCor})` }}/>
             <button onClick={inverterLados}> Inverter Cores</button>
         </div>
         <div>
@@ -81,6 +78,7 @@ export const LinearGradient = () => {
         <textarea
           ref={textAreaRef}
           value={code}
+          id="code"
         />
       </form>
         <button onClick={copyToClipboard}>Copiar</button> 
