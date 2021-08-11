@@ -7,16 +7,11 @@ export const Paleta = () => {
 
     const [displayColorPicker, setDisplayColorPicker] = useState(false);
     
-      const [colorPreview, setColorPreview] = useState("#043696");
-      const [colorPreview2, setColorPreview2] = useState("#1F6CF9");
-      const [colorPreview3, setColorPreview3] = useState("#9CBDFC");
-      const [colorPreview4, setColorPreview4] = useState("#FFFFFF");
       const [color1, setColor1] = useState("#043696");
       const [color2, setColor2] = useState("#1F6CF9");
       const [color3, setColor3] = useState("#9CBDFC");
       const [color4, setColor4] = useState("#FFFFFF");
       const [aniScaleUp, setAniScaleUp] = useState();
-      const textAreaRef = useRef(null);
       const [copySuccess, setCopySuccess] = useState('');
     
       const handleChangeComplete = data => {
@@ -32,8 +27,7 @@ export const Paleta = () => {
           return `#${f(0)}${f(8)}${f(4)}`;
         }
 
-        if (data.hsl !== colorPreview) {
-          setColorPreview(data.hex);
+        if (data.hsl !== color1) {
           setColor1(data.hex)
           setColor2(hslToHex(Math.round(data.hsl.h).toFixed(2), Math.round(data.hsl.s * 100).toFixed(2), (data.hsl.l.toFixed(2) * 100) + 25 ))
           setColor3(hslToHex(Math.round(data.hsl.h).toFixed(2), Math.round(data.hsl.s * 100).toFixed(2), (data.hsl.l.toFixed(2) * 100) + 50 ))
@@ -71,7 +65,7 @@ export const Paleta = () => {
       <div>{color4}<Copy toCopy={color4}/></div>
       </div>
       </div>
-      { displayColorPicker ? <div style={{position: "absolute"}}> <ChromePicker color={colorPreview} onChange={handleChangeComplete} /> </div>  : null }
+      { displayColorPicker ? <div style={{position: "absolute"}}> <ChromePicker color={color1} onChange={handleChangeComplete} /> </div>  : null }
       </div>
         </>
     )
