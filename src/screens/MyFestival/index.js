@@ -5,8 +5,8 @@ import "./styles.css";
 import { exportComponentAsPNG } from "react-component-export-image";
 
 export const MyFestival = () => {
-  const CLIENT_ID = "09edae12570e41b3960d27508c9f81d3";
-  const REDIRECT_URI = "http://localhost:3000";
+  const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+  const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
   const SCOPE = "user-top-read";
