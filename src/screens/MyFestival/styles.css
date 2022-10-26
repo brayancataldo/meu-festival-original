@@ -81,10 +81,13 @@ body {
 }
 
 .text {
-  text-decoration: none;
+  /* text-decoration: none;
   text-shadow: -0.7px -0.7px 0 #000, 0 -0.7px 0 #000, 0.7px -0.7px 0 #000,
     0.7px 0 0 #000, 0.7px 0.7px 0 #000, 0 0.7px 0 #000, -0.7px 0.7px 0 #000,
-    -0.7px 0 0 #000;
+    -0.7px 0 0 #000; */
+  text-shadow: -0.8px -0.8px 0 #000, 0 -0.8px 0 #000, 0.8px -0.8px 0 #000,
+    0.8px 0 0 #000, 0.8px 0.8px 0 #000, 0 0.8px 0 #000, -0.8px 0.8px 0 #000,
+    -0.8px 0 0 #000;
 }
 
 .footer {
