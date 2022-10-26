@@ -61,14 +61,14 @@ body {
 .painel {
   border-radius: 10px;
   font-weight: bold;
+
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   row-gap: 8px; /* Separa as linhas, não deixando grudar */
   column-gap: 16px; /*separa as colunas, não deixando grudar tb */
-  /* width: 400px; */
-  max-height: 400px;
+  height: 450px;
 }
 
 .nav {
