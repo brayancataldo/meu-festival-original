@@ -108,8 +108,8 @@ export const MyFestival = () => {
                       const fontSize = index > 20 ? 12 : 30 - index + "px";
                       return (
                         <a
-                          // target="_blank"
-                          // href={`https://open.spotify.com/artist/${each.id}`}
+                          title={`Go to ${each.name} on Spotify`}
+                          href={`https://open.spotify.com/artist/${each.id}`}
                           key={index}
                           className="text"
                           style={{
