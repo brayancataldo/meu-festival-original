@@ -137,22 +137,17 @@ export const MyFestival = () => {
                 Entrar com Spotify
                 <img src={SpotifyIcon} className="spotify-icon" />
               </button>
-            ) : null}
+            ) : (
+              <button onClick={exportImage} style={{ background: "#1DB954" }}>
+                Baixar imagem
+              </button>
+            )}
             <a href="https://spotify.com/">
               <img src={SpotifyLogo} className="spotify-logo" />
             </a>
           </div>
         </div>
       </div>
-      {token ? (
-        <button
-          onClick={exportImage}
-          className="action-button"
-          style={{ background: "#1DB954" }}
-        >
-          Baixar imagem
-        </button>
-      ) : null}
     </div>
   );
 };
