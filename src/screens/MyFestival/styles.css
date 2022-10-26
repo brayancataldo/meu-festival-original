@@ -1,70 +1,109 @@
 body {
   background-image: url("https://static.wixstatic.com/media/ec091c_1bc3eb93418e47a2a08414b656890241~mv2.jpg/v1/fill/w_1250,h_641,al_c,q_85,enc_auto/ec091c_1bc3eb93418e47a2a08414b656890241~mv2.jpg");
-
   background-repeat: round;
   background-size: auto;
   background-attachment: fixed;
-  width: 100vw;
-  overflow-x: hidden;
   overflow-y: auto;
 }
 
-.container-home {
-  padding: 20px;
-  color: white;
+.container-festival {
+  row-gap: 10px; /* Separa as linhas, não deixando grudar */
+  /* height: 57vh; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #191414; */
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  padding: 10px 100px 300px 100px;
+  /* text-align: center; */
+  /* margin: 0 auto; */
+  background: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.image {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0px 60px;
+  width: 480px;
+  height: 600px;
+
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: #ea37f7;
+  background-image: url("../../assets/LineUp.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  box-shadow: 0px 0px 100px #000;
+  margin: 10px;
+  /* font-family: "untitled1regular"; */
 }
 
-/* @media (max-width: 1024px) {
-  body {
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-attachment: fixed;
+@media (max-width: 700px) {
+  .image {
+    border-radius: 0px;
   }
-} */
+
+  .container-festival {
+    padding: 30px;
+  }
+
+  .nav-buttons {
+    display: none;
+  }
+}
 
 .painel {
   border-radius: 10px;
   font-weight: bold;
   display: flex;
-  flex-wrap: wrap; /*permite que a flexbox quebre linhas*/
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  row-gap: 2px; /* Separa as linhas, não deixando grudar */
-  column-gap: 6px; /*separa as colunas, não deixando grudar tb */
-  width: 400px;
-  height: 450px;
+  row-gap: 8px; /* Separa as linhas, não deixando grudar */
+  column-gap: 16px; /*separa as colunas, não deixando grudar tb */
+  /* width: 400px; */
+  max-height: 400px;
 }
 
-.container-painel {
+.nav {
   display: flex;
-  align-items: center;
-  flex-direction: column;
+  justify-content: space-between;
 }
 
-.image {
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  width: 480px;
-  height: 600px;
-  box-sizing: border-box;
-  border-radius: 5px;
-  background: #ea37f7;
-  background-image: url("../../assets/LineUp.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  box-shadow: 0px 0px 10px #000;
-  /* font-family: "untitled1regular"; */
-  margin: 10px;
+.menu-hamburger {
+  display: none;
 }
 
 .text {
+  text-decoration: none;
   text-shadow: -0.7px -0.7px 0 #000, 0 -0.7px 0 #000, 0.7px -0.7px 0 #000,
     0.7px 0 0 #000, 0.7px 0.7px 0 #000, 0 0.7px 0 #000, -0.7px 0.7px 0 #000,
     -0.7px 0 0 #000;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.spotify-logo {
+  height: 30px;
+}
+
+.spotify-icon {
+  height: 20px;
+}
+
+.spotify-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

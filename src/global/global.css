@@ -2,6 +2,11 @@ body {
   background: #ffffff;
 }
 
+.container-page {
+  color: white;
+  /* flex-direction: column; */
+}
+
 .input {
   width: 200px;
   height: 40px;
@@ -14,8 +19,9 @@ body {
 }
 
 button {
-  width: 220px;
-  height: 40px;
+  min-width: 120px;
+  max-height: 40px;
+  padding: 10px 20px;
   border-radius: 15px;
   border: none;
   margin: 20px;
@@ -23,10 +29,18 @@ button {
   background: #111111;
   cursor: pointer;
   color: white;
+  text-transform: uppercase;
 }
 
 button:hover {
   background-color: #343a40;
+}
+
+.action-button {
+  position: fixed;
+  right: 0px;
+  bottom: 0px;
+  /* font-weight: 500; */
 }
 
 .col {

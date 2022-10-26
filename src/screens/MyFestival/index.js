@@ -3,6 +3,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "./styles.css";
 import { exportComponentAsPNG } from "react-component-export-image";
+import SpotifyLogo from "../../assets/Spotify_Logo_RGB_White.png";
+import SpotifyIcon from "../../assets/Spotify_Icon_RGB_White.png";
+import * as htmlToImage from "html-to-image";
 
 export const MyFestival = () => {
   const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
@@ -13,7 +16,8 @@ export const MyFestival = () => {
   const [token, setToken] = useState("");
   const [topArtists, setTopArtists] = useState([]);
   const exportRef = useRef();
-
+  const node = document.getElementById("print-line-up");
+  // https://open.spotify.com/artist/7FNnA9vBm6EKceENgCGRMb
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.sessionStorage.getItem("token");
@@ -70,63 +74,85 @@ export const MyFestival = () => {
 
   const exportImage = () => {
     exportComponentAsPNG(exportRef, {
-      fileName: "MyFestival",
+      fileName: "MeuFestival",
+      html2CanvasOptions: { backgroundColor: "#F538F6" },
     });
   };
 
   return (
     <div>
-      <div className="container-home">
-        <div className="column">
-          <h1>Line-up dos Sonhos</h1>
-          <p>
-            Já pensou em ir no festival feito para você? Descubra agora como
-            seria o seu Line-up dos Sonhos!
-          </p>
-        </div>
-        <div>
-          {!token ? (
-            <button
-              onClick={() => {
-                window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
-              }}
-              style={{ background: "#22c55e" }}
-            >
-              Conectar Spotify
-            </button>
-          ) : (
-            <div className="container-painel">
-              <div className="image" ref={exportRef}>
-                <div className="painel">
-                  {topArtists
-                    ? topArtists.map((each, index) => {
-                        const fontSize = index > 20 ? 12 : 30 - index + "px";
-                        return (
-                          <text
-                            key={index}
-                            className="text"
-                            style={{
-                              color: each.color,
-                              fontSize: fontSize,
-                            }}
-                          >
-                            {each.name.toUpperCase()}
-                          </text>
-                        );
-                      })
-                    : null}
-                </div>
+      <div className="container-page">
+        <div className="container-festival">
+          <div>
+            <h1>Meu Festival</h1>
+            {/* <div className="nav-buttons">
+                <button onClick={logout} style={{ background: "#f43f5e" }}>
+                  Trocar de Conta
+                </button>
+                <button onClick={logout} style={{ background: "#f43f5e" }}>
+                  Sair
+                </button>
+              </div> */}
+            {/* <div className="menu-hamburger">icon</div> */}
+            <h2>Line-up dos Sonhos</h2>
+            <p>
+              Já pensou em ir no festival feito para você? Descubra agora como
+              seria o seu Line-up dos Sonhos!
+            </p>
+          </div>
+          {token ? (
+            <div className="image" id="print-line-up" ref={exportRef}>
+              <div className="painel">
+                {topArtists
+                  ? topArtists.map((each, index) => {
+                      const fontSize = index > 20 ? 12 : 30 - index + "px";
+                      return (
+                        <a
+                          // target="_blank"
+                          // href={`https://open.spotify.com/artist/${each.id}`}
+                          key={index}
+                          className="text"
+                          style={{
+                            color: each.color,
+                            fontSize: fontSize,
+                          }}
+                        >
+                          {each.name.toUpperCase()}
+                        </a>
+                      );
+                    })
+                  : null}
               </div>
-              <button onClick={exportImage} style={{ background: "#22c55e" }}>
-                Download
-              </button>
-              {/* <button onClick={logout} style={{ background: "#f43f5e" }}>
-                Logout
-              </button> */}
             </div>
-          )}
+          ) : null}
+          <div className="footer">
+            {!token ? (
+              <button
+                className="spotify-button"
+                onClick={() => {
+                  window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
+                }}
+                style={{ background: "#22c55e" }}
+              >
+                Entrar com Spotify
+                <img src={SpotifyIcon} className="spotify-icon" />
+              </button>
+            ) : null}
+            <a href="https://spotify.com/">
+              <img src={SpotifyLogo} className="spotify-logo" />
+            </a>
+          </div>
         </div>
       </div>
+      {token ? (
+        <button
+          onClick={exportImage}
+          className="action-button"
+          style={{ background: "#1DB954" }}
+        >
+          Baixar imagem
+        </button>
+      ) : null}
     </div>
   );
 };
