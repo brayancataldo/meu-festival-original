@@ -5,6 +5,7 @@ import "./styles.css";
 import { exportComponentAsPNG } from "react-component-export-image";
 import SpotifyLogo from "../../assets/Spotify_Logo_RGB_White.png";
 import SpotifyIcon from "../../assets/Spotify_Icon_RGB_White.png";
+import SpotifyGreenIcon from "../../assets/Spotify_Icon_RGB_Green.png";
 import * as htmlToImage from "html-to-image";
 
 export const MyFestival = () => {
@@ -105,7 +106,7 @@ export const MyFestival = () => {
               <div className="painel">
                 {topArtists
                   ? topArtists.map((each, index) => {
-                      const fontSize = index > 20 ? 12 : 30 - index + "px";
+                      const fontSize = index > 14 ? 12 : 26 - index + "px";
                       return (
                         <a
                           title={`Go to ${each.name} on Spotify`}
@@ -123,6 +124,9 @@ export const MyFestival = () => {
                     })
                   : null}
               </div>
+              <a href="https://spotify.com/">
+                <img src={SpotifyLogo} className="spotify-icon" />
+              </a>
             </div>
           ) : null}
           <div className="footer">

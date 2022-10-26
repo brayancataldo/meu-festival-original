@@ -31,6 +31,8 @@ body {
   padding: 0px 60px;
   width: 480px;
   height: 600px;
+  flex-direction: column;
+  row-gap: 20px; /* Separa as linhas, não deixando grudar */
 
   box-sizing: border-box;
   border-radius: 10px;
@@ -61,6 +63,7 @@ body {
 .painel {
   border-radius: 10px;
   font-weight: bold;
+  /* border: 1px solid red; */
 
   display: flex;
   flex-wrap: wrap;
@@ -68,7 +71,7 @@ body {
   justify-content: center;
   row-gap: 8px; /* Separa as linhas, não deixando grudar */
   column-gap: 16px; /*separa as colunas, não deixando grudar tb */
-  height: 450px;
+  height: 420px;
 }
 
 .nav {
