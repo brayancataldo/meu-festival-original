@@ -126,7 +126,9 @@ export const MyFestival = () => {
               <div className="painel">
                 {topArtists
                   ? topArtists.map((each, index) => {
-                      const fontSize = index > 10 ? 14 : 26 - index + "px";
+                      const firsts = index <= 1;
+                      const handleNotTiny = index > 10 ? 14 : 26 - index + "px";
+                      const fontSize = firsts ? 36 : handleNotTiny;
                       return (
                         <a
                           title={`Go to ${each.name} on Spotify`}
