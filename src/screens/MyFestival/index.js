@@ -7,6 +7,7 @@ import SpotifyLogo from "../../assets/Spotify_Logo_RGB_White.png";
 import SpotifyIcon from "../../assets/Spotify_Icon_RGB_White.png";
 import SpotifyGreenIcon from "../../assets/Spotify_Icon_RGB_Green.png";
 import * as htmlToImage from "html-to-image";
+import html2canvas from "html2canvas";
 
 export const MyFestival = () => {
   const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
@@ -16,6 +17,7 @@ export const MyFestival = () => {
   const SCOPE = "user-top-read";
   const [token, setToken] = useState("");
   const [topArtists, setTopArtists] = useState([]);
+  const [visible, setVisible] = useState(false);
   const exportRef = useRef();
   const node = document.getElementById("print-line-up");
   // https://open.spotify.com/artist/7FNnA9vBm6EKceENgCGRMb
@@ -52,7 +54,7 @@ export const MyFestival = () => {
             Authorization: `Bearer ${token}`,
           },
           params: {
-            limit: 40,
+            limit: 36,
           },
         }
       );
@@ -74,17 +76,35 @@ export const MyFestival = () => {
   }, [token]);
 
   const exportImage = () => {
+    // html2canvas(document.querySelector(".image")).then((canvas) => {
+    //   let image = new Image();
+    //   // document.body.appendChild(canvas);
+    //   image.src = canvas.toDataURL();
+    //   document.body.appendChild(image);
+    // });
+    // setVisible(false);
+
     exportComponentAsPNG(exportRef, {
       fileName: "MeuFestival",
       html2CanvasOptions: { backgroundColor: "#F538F6" },
     });
+
+    // var container = document.getElementById("print-line-up");
+    // html2canvas(container, { allowTaint: true }).then(function (canvas) {
+    //   var link = document.createElement("a");
+    //   document.body.appendChild(link);
+    //   link.download = "meu-festival.jpg";
+    //   link.href = canvas.toDataURL();
+    //   link.target = "_blank";
+    //   link.click();
+    // });
   };
 
   return (
     <div>
       <div className="container-page">
         <div className="container-festival">
-          <div>
+          <div className="header">
             <h1>Meu Festival</h1>
             {/* <div className="nav-buttons">
                 <button onClick={logout} style={{ background: "#f43f5e" }}>
@@ -102,11 +122,11 @@ export const MyFestival = () => {
             </p>
           </div>
           {token ? (
-            <div className="image" id="print-line-up" ref={exportRef}>
+            <div className="escondida" id="print-line-up" ref={exportRef}>
               <div className="painel">
                 {topArtists
                   ? topArtists.map((each, index) => {
-                      const fontSize = index > 14 ? 12 : 26 - index + "px";
+                      const fontSize = index > 10 ? 14 : 26 - index + "px";
                       return (
                         <a
                           title={`Go to ${each.name} on Spotify`}
