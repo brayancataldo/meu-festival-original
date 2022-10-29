@@ -2,11 +2,8 @@ import React, { useRef } from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import "./styles.css";
-import { exportComponentAsPNG } from "react-component-export-image";
 import SpotifyLogo from "../../assets/Spotify_Logo_RGB_White.png";
 import SpotifyIcon from "../../assets/Spotify_Icon_RGB_White.png";
-import SpotifyGreenIcon from "../../assets/Spotify_Icon_RGB_Green.png";
-import * as htmlToImage from "html-to-image";
 import html2canvas from "html2canvas";
 
 export const MyFestival = () => {
@@ -17,10 +14,8 @@ export const MyFestival = () => {
   const SCOPE = "user-top-read";
   const [token, setToken] = useState("");
   const [topArtists, setTopArtists] = useState([]);
-  const [visible, setVisible] = useState(false);
   const exportRef = useRef();
-  const node = document.getElementById("print-line-up");
-  // https://open.spotify.com/artist/7FNnA9vBm6EKceENgCGRMb
+
   useEffect(() => {
     const hash = window.location.hash;
     let token = window.sessionStorage.getItem("token");
@@ -75,29 +70,63 @@ export const MyFestival = () => {
     handleUsersData();
   }, [token]);
 
-  const exportImage = () => {
-    // html2canvas(document.querySelector(".image")).then((canvas) => {
-    //   let image = new Image();
-    //   // document.body.appendChild(canvas);
-    //   image.src = canvas.toDataURL();
-    //   document.body.appendChild(image);
-    // });
-    // setVisible(false);
+  function saveAs(uri, filename) {
+    var link = document.createElement("a");
 
-    exportComponentAsPNG(exportRef, {
-      fileName: "MeuFestival",
-      html2CanvasOptions: { backgroundColor: "#F538F6" },
+    if (typeof link.download === "string") {
+      link.href = uri;
+      link.download = filename;
+
+      //Firefox requires the link to be in the body
+      document.body.appendChild(link);
+
+      //simulate click
+      link.click();
+
+      //remove the link when done
+      document.body.removeChild(link);
+    } else {
+      window.open(uri);
+    }
+  }
+
+  const exportImage = async () => {
+    html2canvas(document.getElementById("poster"), {
+      logging: true,
+      letterRendering: 1,
+      allowTaint: true,
+      useCORS: true,
+      backgroundColor: "black",
+    }).then(function (canvas) {
+      saveAs(canvas.toDataURL(), "MeuFestival.png");
     });
+  };
 
-    // var container = document.getElementById("print-line-up");
-    // html2canvas(container, { allowTaint: true }).then(function (canvas) {
-    //   var link = document.createElement("a");
-    //   document.body.appendChild(link);
-    //   link.download = "meu-festival.jpg";
-    //   link.href = canvas.toDataURL();
-    //   link.target = "_blank";
-    //   link.click();
-    // });
+  const exportImage2 = async () => {
+    html2canvas(document.querySelector(".poster")).then((canvas) => {
+      let poster = document.getElementById("poster");
+      poster.style.width = "480px";
+      let imgSrc = canvas.toDataURL();
+      console.log("teste");
+      // parseBase64ToString(imgSrc);
+      // return;
+      poster.src = imgSrc;
+      poster.style.backgroundImage = imgSrc;
+
+      let link = document.createElement("a");
+
+      link.href = imgSrc;
+      link.download = imgSrc;
+
+      //Firefox requires the link to be in the body
+      document.body.appendChild(link);
+
+      //simulate click
+      link.click();
+
+      //remove the link when done
+      document.body.removeChild(link);
+    });
   };
 
   return (
@@ -121,9 +150,10 @@ export const MyFestival = () => {
               seria o seu Line-up dos Sonhos!
             </p>
           </div>
+
           {token ? (
-            <div className="escondida" id="print-line-up" ref={exportRef}>
-              <div className="painel">
+            <div className="poster" id="poster" ref={exportRef}>
+              <div className="poster-names">
                 {topArtists
                   ? topArtists.map((each, index) => {
                       const firsts = index <= 1;
