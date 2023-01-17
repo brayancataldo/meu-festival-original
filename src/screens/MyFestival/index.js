@@ -3,18 +3,22 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "./styles.css";
 import SpotifyLogo from "../../assets/Spotify_Logo_RGB_White.png";
+import LogoRTM from "../../assets/LogoRTM.png";
 import SpotifyIcon from "../../assets/Spotify_Icon_RGB_White.png";
 import html2canvas from "html2canvas";
+import { Navbar } from "../../components/navbar";
 
 export const MyFestival = () => {
   const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
   const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
   const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
   const RESPONSE_TYPE = "token";
-  const SCOPE = "user-top-read";
+  const SCOPE = "user-top-read&=user-read-email";
   const [token, setToken] = useState("");
   const [topArtists, setTopArtists] = useState([]);
+  const [user, setUser] = useState({});
   const exportRef = useRef();
+  const connectSpotifyUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -34,13 +38,11 @@ export const MyFestival = () => {
     setToken(token);
   }, []);
 
-  const logout = () => {
-    setToken("");
-    window.sessionStorage.removeItem("token");
-  };
+  useEffect(() => {
+    setToken(window.sessionStorage.getItem("token"));
+  }, [window.sessionStorage.getItem("token")]);
 
   const handleUsersData = async () => {
-    if (!token) return;
     try {
       const { data } = await axios.get(
         "https://api.spotify.com/v1/me/top/artists",
@@ -66,7 +68,22 @@ export const MyFestival = () => {
     }
   };
 
+  const handleUserProfile = async () => {
+    try {
+      const { data } = await axios.get("https://api.spotify.com/v1/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setUser(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
+    if (!token) return;
+    handleUserProfile();
     handleUsersData();
   }, [token]);
 
@@ -134,7 +151,12 @@ export const MyFestival = () => {
       <div className="container-page">
         <div className="container-festival">
           <div className="header">
-            <h1>Meu Festival</h1>
+            <Navbar
+              name={user.display_name}
+              image={user.images ? user.images[0].url : ""}
+              id={user.id}
+              url={connectSpotifyUrl}
+            />
             {/* <div className="nav-buttons">
                 <button onClick={logout} style={{ background: "#f43f5e" }}>
                   Trocar de Conta
@@ -144,7 +166,7 @@ export const MyFestival = () => {
                 </button>
               </div> */}
             {/* <div className="menu-hamburger">icon</div> */}
-            <h2>Line-up dos Sonhos</h2>
+            <h2>Line-up dos Sonhos </h2>
             <p>
               Já pensou em ir no festival feito para você? Descubra agora como
               seria o seu Line-up dos Sonhos!
@@ -161,8 +183,10 @@ export const MyFestival = () => {
                       const fontSize = firsts ? 36 : handleNotTiny;
                       return (
                         <a
-                          title={`Go to ${each.name} on Spotify`}
+                          title={`Ir para ${each.name} no Spotify`}
                           href={`https://open.spotify.com/artist/${each.id}`}
+                          target="_blank"
+                          rel="noreferrer"
                           key={index}
                           className="text"
                           style={{
@@ -176,29 +200,53 @@ export const MyFestival = () => {
                     })
                   : null}
               </div>
-              <a href="https://spotify.com/">
-                <img src={SpotifyLogo} className="spotify-icon" />
+              <a href="https://spotify.com/" target="_blank" rel="noreferrer">
+                <img
+                  src={SpotifyLogo}
+                  className="spotify-icon"
+                  alt="Ir para Spotify"
+                />
               </a>
             </div>
           ) : null}
           <div className="footer">
+            <a
+              href="https://www.rockthemountain.com.br/"
+              className="aba"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img src={LogoRTM} className="logo-rtm" />
+            </a>
             {!token ? (
-              <button
-                className="spotify-button"
-                onClick={() => {
-                  window.location.href = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPE}`;
-                }}
-                style={{ background: "#22c55e" }}
+              <a
+                className="aba"
+                href={connectSpotifyUrl}
+                style={{ background: "#1DB954" }}
               >
                 Entrar com Spotify
-                <img src={SpotifyIcon} className="spotify-icon" />
-              </button>
+                <img
+                  src={SpotifyIcon}
+                  className="spotify-icon"
+                  alt="Entrar com Spotify"
+                />
+              </a>
             ) : (
-              <button onClick={exportImage} style={{ background: "#1DB954" }}>
+              <button
+                onClick={exportImage}
+                style={{ background: "#1DB954" }}
+                className="aba"
+              >
                 Baixar imagem
               </button>
             )}
-            <a href="https://spotify.com/">
+            <a
+              href="https://spotify.com/"
+              className="aba"
+              target="_blank"
+              rel="noreferrer"
+              alt="go to Spotify"
+            >
               <img src={SpotifyLogo} className="spotify-logo" />
             </a>
           </div>

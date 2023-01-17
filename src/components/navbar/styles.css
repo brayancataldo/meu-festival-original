@@ -1,17 +1,28 @@
 .navbar {
-    background-color: #ffffff;
-    height: 70px;
-    display: flex;
-    justify-content: center;
-    padding: 0.5rem calc((100vw - 1000px) / 2);
-    z-index: 10;
-    align-items: center;
+  /* background-color: #ffffff; */
+  display: flex;
+  align-items: center;
+  width: 100%;
+  /* border: 1px solid red; */
+  justify-content: space-between;
+  /* padding: 0.5rem calc((100vw - 1000px) / 2); */
+  padding: 20px 0;
 }
 
-.aba {
-    margin: 30px;
-    color: #111111;
-    font-weight: 500;
-    font-size: 13px;
-    text-decoration: none;
+.profile-picture {
+  height: 40px;
+  border-radius: 6px;
+  margin-left: 16px;
+}
+
+.container-name-image {
+  display: flex;
+  border: 1px solid red;
+  padding: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-logo {
+  /* background-color: red; */
 }

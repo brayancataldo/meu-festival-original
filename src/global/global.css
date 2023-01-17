@@ -18,7 +18,7 @@ body {
   outline: none;
 }
 
-button {
+.styled-button {
   min-width: 120px;
   max-height: 40px;
   padding: 10px 20px;
@@ -135,4 +135,27 @@ button:hover {
 
 #copyIcon:hover {
   color: #b3b3b3;
+}
+
+.aba {
+  display: flex;
+  /* border: 1px solid red; */
+  border-radius: 6px;
+  padding: 14px;
+  height: 100px;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 16px;
+  text-decoration: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0%);
+  border: none;
+  cursor: pointer;
+}
+
+.aba:hover {
+  transform: scale(1.2);
+  /* filter: brightness(0.5); */
+  background-color: rgba(0, 0, 0, 50%);
 }
